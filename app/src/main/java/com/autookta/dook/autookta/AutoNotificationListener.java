@@ -20,15 +20,15 @@ public class AutoNotificationListener extends NotificationListenerService
     {
         if(!sbn.getPackageName().equals("com.okta.android.auth")) return; //only want dat okta
 
-        Action[] buttons = sbn.getNotification().actions;
-        for(int i = 0; i < buttons.length ; i++)
+        Action[] buttons = sbn.getNotification().actions; //Get all the actions (buttons) of the okta notification
+        try {
+            buttons[0].actionIntent.send(); //get the pending intent from the approve button (the first one) and fuckin send it
+        } catch (PendingIntent.CanceledException e)
         {
-            try {
-                buttons[0].actionIntent.send();
-            } catch (PendingIntent.CanceledException e) {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
+
+        //simples
     }
 
 }
